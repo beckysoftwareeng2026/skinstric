@@ -45,7 +45,7 @@ function Summary() {
           )}
 
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/upload")}
             className="mt-10 border border-black px-6 py-3 text-xs font-bold uppercase transition hover:bg-black hover:text-white"
           >
             Return Home
