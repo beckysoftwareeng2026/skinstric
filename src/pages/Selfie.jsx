@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Selfie() {
@@ -42,12 +42,21 @@ function Selfie() {
     setSelfie(imageData);
     localStorage.setItem("skinstricSelfie", imageData);
     localStorage.setItem("skinstricImage", imageData);
+    stopCamera();
   }
 
   function stopCamera() {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
+    const currentStream = videoRef.current?.srcObject || stream;
+
+    if (currentStream) {
+      currentStream.getTracks().forEach((track) => track.stop());
     }
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+
+    setStream(null);
   }
 
   async function submitSelfie() {
@@ -81,6 +90,11 @@ function Selfie() {
       setError("Something went wrong. Please try again.");
     }
   }
+  useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, []);
 
   return (
     <main className="relative min-h-screen bg-[#f4f4f2] text-black">
