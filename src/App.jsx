@@ -8,6 +8,7 @@ import Process from "./pages/Process";
 import Proceed from "./pages/Proceed";
 import Demographics from "./pages/Demographics";
 import Result from "./pages/Result";
+import Selfie from "./pages/Selfie";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/proceed" element={<Proceed />} />
         <Route path="/demographics" element={<Demographics />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/selfie" element={<Selfie />} />
       </Routes>
     </BrowserRouter>
   );

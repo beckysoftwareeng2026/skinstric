@@ -27,7 +27,7 @@ function Result() {
 
       <section className="flex h-[75vh] items-center justify-center gap-48">
         <button
-          onClick={() => alert("Camera scan coming soon")}
+          onClick={() => navigate("/selfie")}
           className="relative flex h-[420px] w-[420px] items-center justify-center"
         >
           <div className="absolute h-[390px] w-[390px] rotate-45 border border-dashed border-gray-300"></div>
