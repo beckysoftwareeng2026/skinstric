@@ -5,14 +5,14 @@ function Select() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-8 py-8">
+      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
             <span className="font-normal text-gray-400">[ INTRO ]</span>
           </div>
 
-          <div className="mt-8 space-y-2 text-sm font-bold uppercase">
+          <div className="mt-8 space-y-2 text-xs font-bold uppercase sm:text-sm">
             <p>A.I. Analysis</p>
             <p>A.I. has estimated the following.</p>
             <p>Fix estimated information if needed.</p>
@@ -24,25 +24,27 @@ function Select() {
         </button>
       </nav>
 
-      <section className="flex h-[70vh] items-center justify-center">
-        <div className="grid h-[380px] w-[380px] rotate-45 grid-cols-2 grid-rows-2 gap-2">
+      <section className="flex min-h-[62vh] items-center justify-center px-6 pb-28 pt-4 md:min-h-[68vh]">
+        <div className="grid h-[250px] w-[250px] rotate-45 grid-cols-2 grid-rows-2 gap-2 sm:h-[320px] sm:w-[320px] md:h-[380px] md:w-[380px]">
           <button
             onClick={() => navigate("/demographics")}
             className="flex items-center justify-center bg-[#e8e8eb] transition hover:bg-black hover:text-white"
           >
-            <span className="-rotate-45 text-center text-sm font-bold uppercase">
+            <span className="-rotate-45 text-center text-[10px] font-bold uppercase sm:text-xs md:text-sm">
               Demographics
             </span>
           </button>
 
           <button className="flex items-center justify-center bg-[#f0f0f2] transition hover:bg-black hover:text-white">
-            <span className="-rotate-45 text-center text-sm font-bold uppercase">
-              Skin Type Details
+            <span className="-rotate-45 text-center text-[10px] font-bold uppercase leading-tight sm:text-xs md:text-sm">
+              Skin Type
+              <br />
+              Details
             </span>
           </button>
 
           <button className="flex items-center justify-center bg-[#f0f0f2] transition hover:bg-black hover:text-white">
-            <span className="-rotate-45 text-center text-sm font-bold uppercase">
+            <span className="-rotate-45 text-center text-[10px] font-bold uppercase leading-tight sm:text-xs md:text-sm">
               Cosmetic
               <br />
               Concerns
@@ -50,34 +52,36 @@ function Select() {
           </button>
 
           <button className="flex items-center justify-center bg-[#f0f0f2] transition hover:bg-black hover:text-white">
-            <span className="-rotate-45 text-center text-sm font-bold uppercase">
+            <span className="-rotate-45 text-center text-[10px] font-bold uppercase sm:text-xs md:text-sm">
               Weather
             </span>
           </button>
         </div>
       </section>
 
-      <button
-        onClick={() => navigate("/result")}
-        className="absolute bottom-10 left-8 flex items-center gap-4"
-      >
-        <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
-          <span className="-rotate-45 text-lg">‹</span>
-        </div>
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-between bg-[#f4f4f2]/95 px-6 py-5 md:px-8">
+        <button
+          onClick={() => navigate("/result")}
+          className="flex items-center gap-4"
+        >
+          <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black bg-[#f4f4f2]">
+            <span className="-rotate-45 text-lg">‹</span>
+          </div>
 
-        <span className="text-sm font-bold uppercase">Back</span>
-      </button>
+          <span className="text-sm font-bold uppercase">Back</span>
+        </button>
 
-      <button
-        onClick={() => navigate("/summary")}
-        className="absolute bottom-10 right-8 flex items-center gap-4"
-      >
-        <span className="text-sm font-bold uppercase">Get Summary</span>
+        <button
+          onClick={() => navigate("/summary")}
+          className="flex items-center gap-4"
+        >
+          <span className="text-sm font-bold uppercase">Get Summary</span>
 
-        <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
-          <span className="-rotate-45 text-lg">›</span>
-        </div>
-      </button>
+          <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black bg-[#f4f4f2]">
+            <span className="-rotate-45 text-lg">›</span>
+          </div>
+        </button>
+      </div>
     </main>
   );
 }

@@ -19,7 +19,7 @@ function Upload() {
     });
   }
 
-  async function handleFileChange(e) {
+  function handleFileChange(e) {
     const file = e.target.files[0];
 
     if (!file) return;
@@ -70,8 +70,8 @@ function Upload() {
   }
 
   return (
-    <main className="relative min-h-screen bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-8 py-8">
+    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
@@ -86,26 +86,40 @@ function Upload() {
         </button>
       </nav>
 
-      <section className="flex h-[75vh] items-center justify-center">
-        <div className="text-center">
+      <section className="flex min-h-[70vh] items-center justify-center px-6 pb-28">
+        <div className="flex w-full max-w-md flex-col items-center text-center">
           <p className="mb-4 text-xs uppercase text-gray-500">Upload Image</p>
 
-          <h1 className="text-6xl font-[200]">Upload Your Photo</h1>
+          <h1 className="text-[48px] font-[200] leading-none sm:text-[56px] md:text-6xl">
+            Upload Your Photo
+          </h1>
 
-          {preview && (
-            <img
-              src={preview}
-              alt="Preview"
-              className="mx-auto mt-8 h-40 w-40 rounded-full object-cover"
+          <label className="mt-8 flex h-60 w-60 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-black bg-white transition hover:bg-black hover:text-white sm:h-72 sm:w-72">
+            {preview ? (
+              <img
+                src={preview}
+                alt="Preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="px-8 text-center text-xs font-bold uppercase">
+                Choose Image
+              </span>
+            )}
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
             />
-          )}
+          </label>
 
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="mt-8"
-          />
+          {image && (
+            <p className="mt-4 max-w-[260px] truncate text-xs text-gray-500">
+              {image.name}
+            </p>
+          )}
 
           {error && (
             <p className="mt-4 text-xs font-bold uppercase text-red-500">
@@ -116,7 +130,7 @@ function Upload() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="mt-8 border border-black px-6 py-3 text-xs font-bold uppercase transition hover:bg-black hover:text-white disabled:opacity-50"
+            className="mt-8 w-full border border-black px-6 py-3 text-xs font-bold uppercase transition hover:bg-black hover:text-white disabled:opacity-50 sm:w-auto"
           >
             {loading ? "Analyzing..." : "Submit Image"}
           </button>
@@ -124,8 +138,8 @@ function Upload() {
       </section>
 
       <button
-        onClick={() => navigate("/proceed")}
-        className="absolute bottom-10 left-8 flex items-center gap-4"
+        onClick={() => navigate("/result")}
+        className="absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>
