@@ -36,7 +36,7 @@ function Proceed() {
 
       <button
         onClick={() => navigate("/location")}
-        className="absolute bottom-10 left-8 flex items-center gap-4"
+        className="absolute bottom-8 left-6 flex items-center gap-4 md:bottom-10 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>
@@ -46,8 +46,8 @@ function Proceed() {
       </button>
 
       <button
-        onClick={() => navigate("/upload")}
-        className="absolute bottom-10 right-8 flex items-center gap-4"
+        onClick={() => navigate("/result")}
+        className="absolute bottom-8 right-6 flex items-center gap-4 md:bottom-10 md:right-8"
       >
         <span className="text-sm font-bold uppercase">Proceed</span>
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Selfie() {
@@ -9,8 +9,24 @@ function Selfie() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const stopCamera = useCallback(() => {
+    const currentStream = videoRef.current?.srcObject || stream;
+
+    if (currentStream) {
+      currentStream.getTracks().forEach((track) => track.stop());
+    }
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+
+    setStream(null);
+  }, [stream]);
+
   async function startCamera() {
     try {
+      setError("");
+
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
@@ -39,24 +55,12 @@ function Selfie() {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const imageData = canvas.toDataURL("image/jpeg");
+
     setSelfie(imageData);
     localStorage.setItem("skinstricSelfie", imageData);
     localStorage.setItem("skinstricImage", imageData);
+
     stopCamera();
-  }
-
-  function stopCamera() {
-    const currentStream = videoRef.current?.srcObject || stream;
-
-    if (currentStream) {
-      currentStream.getTracks().forEach((track) => track.stop());
-    }
-
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
-    }
-
-    setStream(null);
   }
 
   async function submitSelfie() {
@@ -90,15 +94,16 @@ function Selfie() {
       setError("Something went wrong. Please try again.");
     }
   }
+
   useEffect(() => {
     return () => {
       stopCamera();
     };
-  }, []);
+  }, [stopCamera]);
 
   return (
-    <main className="relative min-h-screen bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-8 py-8">
+    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
@@ -113,13 +118,15 @@ function Selfie() {
         </button>
       </nav>
 
-      <section className="flex h-[75vh] items-center justify-center">
-        <div className="text-center">
+      <section className="flex min-h-[70vh] items-center justify-center px-6 pb-28">
+        <div className="flex w-full max-w-md flex-col items-center text-center">
           <p className="mb-4 text-xs uppercase text-gray-500">Camera Scan</p>
 
-          <h1 className="text-6xl font-[200]">Take a Selfie</h1>
+          <h1 className="text-[48px] font-[200] leading-none sm:text-[56px] md:text-6xl">
+            Take a Selfie
+          </h1>
 
-          <div className="mx-auto mt-8 h-72 w-72 overflow-hidden rounded-full border border-black bg-white">
+          <div className="mx-auto mt-8 h-60 w-60 overflow-hidden rounded-full border border-black bg-white sm:h-72 sm:w-72">
             {selfie ? (
               <img
                 src={selfie}
@@ -131,6 +138,7 @@ function Selfie() {
                 ref={videoRef}
                 autoPlay
                 playsInline
+                muted
                 className="h-full w-full object-cover"
               />
             )}
@@ -144,24 +152,24 @@ function Selfie() {
             </p>
           )}
 
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <button
               onClick={startCamera}
-              className="border border-black px-6 py-3 text-xs font-bold uppercase"
+              className="w-full border border-black px-6 py-3 text-xs font-bold uppercase sm:w-auto"
             >
               Start Camera
             </button>
 
             <button
               onClick={takeSelfie}
-              className="border border-black px-6 py-3 text-xs font-bold uppercase"
+              className="w-full border border-black px-6 py-3 text-xs font-bold uppercase sm:w-auto"
             >
               Take Selfie
             </button>
 
             <button
               onClick={submitSelfie}
-              className="border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white"
+              className="w-full border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white sm:w-auto"
             >
               Submit
             </button>
@@ -174,7 +182,7 @@ function Selfie() {
           stopCamera();
           navigate("/result");
         }}
-        className="absolute bottom-10 left-8 flex items-center gap-4"
+        className="absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>

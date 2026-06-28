@@ -54,8 +54,8 @@ function Location() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f4f4f2] text-black">
-      <nav className="flex items-center justify-between px-8 py-8">
+    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
@@ -70,12 +70,15 @@ function Location() {
         </button>
       </nav>
 
-      <section className="relative flex h-[75vh] items-center justify-center overflow-hidden">
-        <div className="absolute h-[420px] w-[420px] rotate-45 border border-dashed border-gray-300"></div>
-        <div className="absolute h-[360px] w-[360px] rotate-[75deg] border border-dashed border-gray-300"></div>
-        <div className="absolute h-[300px] w-[300px] rotate-[15deg] border border-dashed border-gray-300"></div>
+      <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-6">
+        <div className="absolute h-[300px] w-[300px] rotate-45 border border-dashed border-gray-300 sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px]"></div>
+        <div className="absolute h-[260px] w-[260px] rotate-[75deg] border border-dashed border-gray-300 sm:h-[360px] sm:w-[360px] md:h-[460px] md:w-[460px]"></div>
+        <div className="absolute h-[220px] w-[220px] rotate-[15deg] border border-dashed border-gray-300 sm:h-[300px] sm:w-[300px] md:h-[390px] md:w-[390px]"></div>
 
-        <form onSubmit={handleSubmit} className="relative z-10 text-center">
+        <form
+          onSubmit={handleSubmit}
+          className="relative z-10 flex w-full -translate-y-8 flex-col items-center text-center md:-translate-y-10"
+        >
           <p className="mb-3 text-xs font-medium uppercase text-gray-400">
             Click To Type
           </p>
@@ -88,7 +91,7 @@ function Location() {
             }}
             autoFocus
             placeholder="Enter your location"
-            className="w-[520px] border-b border-black bg-transparent text-center text-[56px] font-[200] leading-none outline-none placeholder:text-gray-300"
+            className="w-full max-w-[520px] border-b border-black bg-transparent text-center text-[30px] font-[200] leading-none outline-none placeholder:text-gray-300 sm:text-[42px] md:text-[56px]"
           />
 
           {error && (
@@ -99,7 +102,7 @@ function Location() {
 
           <button
             type="submit"
-            className="mt-8 border border-black px-6 py-3 text-xs font-bold uppercase transition hover:bg-black hover:text-white"
+            className="mt-8 border border-black px-6 py-3 text-xs font-bold uppercase"
           >
             Continue
           </button>
@@ -108,7 +111,7 @@ function Location() {
 
       <button
         onClick={() => navigate("/testing")}
-        className="absolute bottom-10 left-8 flex items-center gap-4"
+        className="absolute bottom-10 left-6 flex items-center gap-4 md:bottom-12 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>
