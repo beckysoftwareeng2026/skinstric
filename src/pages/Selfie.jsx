@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
 
 function Selfie() {
   const videoRef = useRef(null);
@@ -102,8 +103,8 @@ function Selfie() {
   }, [stopCamera]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
+    <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+      <nav className="animate-fade-slide-up flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
@@ -113,25 +114,25 @@ function Selfie() {
           <p className="mt-8 text-xs font-bold uppercase">To Start Analysis</p>
         </div>
 
-        <button className="border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white">
+        <button className="smooth-button border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white hover:bg-transparent hover:text-black">
           Enter Code
         </button>
       </nav>
 
       <section className="flex min-h-[70vh] items-center justify-center px-6 pb-28">
-        <div className="flex w-full max-w-md flex-col items-center text-center">
+        <div className="animate-fade-slide-up flex w-full max-w-md flex-col items-center text-center">
           <p className="mb-4 text-xs uppercase text-gray-500">Camera Scan</p>
 
           <h1 className="text-[48px] font-[200] leading-none sm:text-[56px] md:text-6xl">
             Take a Selfie
           </h1>
 
-          <div className="mx-auto mt-8 h-60 w-60 overflow-hidden rounded-full border border-black bg-white sm:h-72 sm:w-72">
+          <div className="mx-auto mt-8 h-60 w-60 overflow-hidden rounded-full border border-black bg-white transition duration-500 sm:h-72 sm:w-72">
             {selfie ? (
               <img
                 src={selfie}
                 alt="Selfie preview"
-                className="h-full w-full object-cover"
+                className="h-full w-full animate-fade-slide-up object-cover"
               />
             ) : (
               <video
@@ -155,21 +156,21 @@ function Selfie() {
           <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
             <button
               onClick={startCamera}
-              className="w-full border border-black px-6 py-3 text-xs font-bold uppercase sm:w-auto"
+              className="smooth-button w-full border border-black px-6 py-3 text-xs font-bold uppercase hover:bg-black hover:text-white sm:w-auto"
             >
               Start Camera
             </button>
 
             <button
               onClick={takeSelfie}
-              className="w-full border border-black px-6 py-3 text-xs font-bold uppercase sm:w-auto"
+              className="smooth-button w-full border border-black px-6 py-3 text-xs font-bold uppercase hover:bg-black hover:text-white sm:w-auto"
             >
               Take Selfie
             </button>
 
             <button
               onClick={submitSelfie}
-              className="w-full border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white sm:w-auto"
+              className="smooth-button w-full border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white hover:bg-transparent hover:text-black sm:w-auto"
             >
               Submit
             </button>
@@ -182,7 +183,7 @@ function Selfie() {
           stopCamera();
           navigate("/result");
         }}
-        className="absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
+        className="smooth-button absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>
@@ -190,7 +191,7 @@ function Selfie() {
 
         <span className="text-sm font-bold uppercase">Back</span>
       </button>
-    </main>
+    </PageLayout>
   );
 }
 

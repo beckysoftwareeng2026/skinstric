@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slowRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.55s ease-out both;
+}
+
+.animate-slow-rotate {
+  animation: slowRotate 35s linear infinite;
+}
+
+.smooth-button {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease,
+    transform 200ms ease,
+    opacity 250ms ease;
+}
+
+.smooth-button:hover {
+  transform: translateY(-2px);
+}
+
+.smooth-button:active {
+  transform: scale(0.98);
+}

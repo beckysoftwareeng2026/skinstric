@@ -1,8 +1,8 @@
 import SummaryCard from "../components/SummaryCard";
-
+import PageLayout from "../components/PageLayout";
 function Summary() {
   return (
-    <main className="min-h-screen bg-[#f4f4f2] text-black">
+    <PageLayout className="min-h-screen bg-[#f4f4f2] text-black">
       <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
@@ -19,7 +19,7 @@ function Summary() {
       </nav>
 
       <SummaryCard />
-    </main>
+    </PageLayout>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
 
 function Process() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Process() {
   }, [navigate]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+    <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
       <nav className="flex items-start justify-between px-8 py-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
@@ -30,17 +31,17 @@ function Process() {
       </nav>
 
       <section className="relative flex h-[75vh] items-center justify-center">
-        <div className="absolute h-[520px] w-[520px] rotate-45 border border-dashed border-gray-300"></div>
+        <div className="animate-slow-rotate absolute h-[520px] w-[520px] rotate-45 border border-dashed border-gray-300"></div>
         <div className="absolute h-[460px] w-[460px] rotate-[75deg] border border-dashed border-gray-300"></div>
         <div className="absolute h-[390px] w-[390px] rotate-[15deg] border border-dashed border-gray-300"></div>
 
-        <div className="relative z-10 text-center">
+        <div className="animate-fade-slide-up relative z-10 text-center">
           <p className="mb-8 text-lg text-gray-600">Processing submission</p>
 
-          <div className="flex justify-center gap-5">
-            <span className="h-2 w-2 rounded-full bg-gray-400 animate-pulse"></span>
-            <span className="h-2 w-2 rounded-full bg-gray-400 animate-pulse [animation-delay:150ms]"></span>
-            <span className="h-2 w-2 rounded-full bg-gray-400 animate-pulse [animation-delay:300ms]"></span>
+          <div className="mt-2 flex justify-center gap-4">
+            <span className="h-2.5 w-2.5 rounded-full bg-black/40 animate-pulse"></span>
+            <span className="h-2.5 w-2.5 rounded-full bg-gray-400 animate-pulse [animation-delay:150ms]"></span>
+            <span className="h-2.5 w-2.5 rounded-full bg-gray-400 animate-pulse [animation-delay:300ms]"></span>
           </div>
         </div>
       </section>
@@ -55,7 +56,7 @@ function Process() {
 
         <span className="text-sm font-bold uppercase">Back</span>
       </button>
-    </main>
+    </PageLayout>
   );
 }
 

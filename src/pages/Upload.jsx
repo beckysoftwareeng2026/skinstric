@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
 
 function Upload() {
   const [image, setImage] = useState(null);
@@ -70,8 +71,8 @@ function Upload() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
+    <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+      <nav className="animate-fade-slide-up flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
             <span>SKINSTRIC</span>
@@ -81,25 +82,25 @@ function Upload() {
           <p className="mt-8 text-xs font-bold uppercase">To Start Analysis</p>
         </div>
 
-        <button className="border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white">
+        <button className="smooth-button border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white hover:bg-transparent hover:text-black">
           Enter Code
         </button>
       </nav>
 
       <section className="flex min-h-[70vh] items-center justify-center px-6 pb-28">
-        <div className="flex w-full max-w-md flex-col items-center text-center">
+        <div className="animate-fade-slide-up flex w-full max-w-md flex-col items-center text-center">
           <p className="mb-4 text-xs uppercase text-gray-500">Upload Image</p>
 
           <h1 className="text-[48px] font-[200] leading-none sm:text-[56px] md:text-6xl">
             Upload Your Photo
           </h1>
 
-          <label className="mt-8 flex h-60 w-60 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-black bg-white transition hover:bg-black hover:text-white sm:h-72 sm:w-72">
+          <label className="smooth-button mt-8 flex h-60 w-60 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-black bg-white hover:bg-black hover:text-white sm:h-72 sm:w-72">
             {preview ? (
               <img
                 src={preview}
                 alt="Preview"
-                className="h-full w-full object-cover"
+                className="h-full w-full animate-fade-slide-up object-cover"
               />
             ) : (
               <span className="px-8 text-center text-xs font-bold uppercase">
@@ -130,7 +131,7 @@ function Upload() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="mt-8 w-full border border-black px-6 py-3 text-xs font-bold uppercase transition hover:bg-black hover:text-white disabled:opacity-50 sm:w-auto"
+            className="smooth-button mt-8 w-full border border-black px-6 py-3 text-xs font-bold uppercase hover:bg-black hover:text-white disabled:opacity-50 sm:w-auto"
           >
             {loading ? "Analyzing..." : "Submit Image"}
           </button>
@@ -139,7 +140,7 @@ function Upload() {
 
       <button
         onClick={() => navigate("/result")}
-        className="absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
+        className="smooth-button absolute bottom-10 left-6 flex items-center gap-4 md:left-8"
       >
         <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
           <span className="-rotate-45 text-lg">‹</span>
@@ -147,7 +148,7 @@ function Upload() {
 
         <span className="text-sm font-bold uppercase">Back</span>
       </button>
-    </main>
+    </PageLayout>
   );
 }
 

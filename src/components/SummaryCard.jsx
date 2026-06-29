@@ -21,6 +21,7 @@ function SummaryCard() {
   };
 
   const [stepIndex, setStepIndex] = useState(0);
+  const [animationKey, setAnimationKey] = useState(0);
 
   const currentStep = steps[stepIndex];
   const currentOptions = sortScores(data[currentStep.key]);
@@ -42,6 +43,7 @@ function SummaryCard() {
   function handleNext() {
     if (stepIndex < steps.length - 1) {
       setStepIndex(stepIndex + 1);
+      setAnimationKey((prev) => prev + 1);
       scrollPageToTop();
       return;
     }
@@ -57,6 +59,7 @@ function SummaryCard() {
   function handleBack() {
     if (stepIndex > 0) {
       setStepIndex(stepIndex - 1);
+      setAnimationKey((prev) => prev + 1);
       scrollPageToTop();
       return;
     }
@@ -81,8 +84,14 @@ function SummaryCard() {
         </p>
       </div>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-16 lg:flex-row">
-        <div className="text-center lg:text-left">
+      <div
+        key={animationKey}
+        className="flex flex-1 animate-fade-slide-up flex-col items-center justify-center gap-16 lg:flex-row"
+      >
+        <div
+          key={`heading-${animationKey}`}
+          className="animate-fade-slide-up text-center lg:text-left"
+        >
           <p className="text-sm uppercase tracking-[0.3em] text-gray-400">
             {currentStep.label}
           </p>
@@ -92,7 +101,10 @@ function SummaryCard() {
           </h2>
         </div>
 
-        <div className="flex flex-col items-center">
+        <div
+          key={`confidence-${animationKey}`}
+          className="animate-fade-slide-up flex flex-col items-center"
+        >
           <div className="flex h-48 w-48 items-center justify-center rounded-full border border-black">
             <div className="flex h-36 w-36 items-center justify-center rounded-full border border-black">
               <span className="text-4xl font-[200]">
@@ -106,7 +118,10 @@ function SummaryCard() {
           </p>
         </div>
 
-        <div className="w-full max-w-sm">
+        <div
+          key={`options-${animationKey}`}
+          className="animate-fade-slide-up w-full max-w-sm"
+        >
           <div className="space-y-3">
             {currentOptions.map(([item, score]) => {
               const isSelected = selected[currentStep.key] === item;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
 
 function Location() {
   const [location, setLocation] = useState("");
@@ -54,7 +55,7 @@ function Location() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+    <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
       <nav className="flex items-start justify-between px-6 py-8 md:px-8">
         <div>
           <div className="flex items-center gap-3 text-sm font-bold">
@@ -71,13 +72,12 @@ function Location() {
       </nav>
 
       <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-6">
-        <div className="absolute h-[300px] w-[300px] rotate-45 border border-dashed border-gray-300 sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px]"></div>
+        <div className="animate-slow-rotate absolute h-[300px] w-[300px] rotate-45 border border-dashed border-gray-300 sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px]"></div>
         <div className="absolute h-[260px] w-[260px] rotate-[75deg] border border-dashed border-gray-300 sm:h-[360px] sm:w-[360px] md:h-[460px] md:w-[460px]"></div>
         <div className="absolute h-[220px] w-[220px] rotate-[15deg] border border-dashed border-gray-300 sm:h-[300px] sm:w-[300px] md:h-[390px] md:w-[390px]"></div>
-
         <form
           onSubmit={handleSubmit}
-          className="relative z-10 flex w-full -translate-y-8 flex-col items-center text-center md:-translate-y-10"
+          className="relative z-10 flex w-full -translate-y-8 animate-fade-slide-up flex-col items-center text-center md:-translate-y-10"
         >
           <p className="mb-3 text-xs font-medium uppercase text-gray-400">
             Click To Type
@@ -119,7 +119,7 @@ function Location() {
 
         <span className="text-sm font-bold uppercase">Back</span>
       </button>
-    </main>
+    </PageLayout>
   );
 }
 
