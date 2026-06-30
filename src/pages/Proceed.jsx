@@ -1,25 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
+import Navbar from "../components/Navbar";
 
 function Proceed() {
   const navigate = useNavigate();
 
   return (
     <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
-        <div>
-          <div className="flex items-center gap-3 text-sm font-bold">
-            <span>SKINSTRIC</span>
-            <span className="font-normal text-gray-400">[ INTRO ]</span>
-          </div>
-
-          <p className="mt-8 text-xs font-bold uppercase">To Start Analysis</p>
-        </div>
-
-        <button className="smooth-button border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white hover:bg-transparent hover:text-black">
-          Enter Code
-        </button>
-      </nav>
+      <Navbar subtitle="A.I. Analysis" />
 
       <section className="relative flex h-[75vh] items-center justify-center">
         <div className="animate-slow-rotate absolute h-[520px] w-[520px] rotate-45 border border-dashed border-gray-300"></div>

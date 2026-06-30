@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
+import Navbar from "../components/Navbar";
 
 function Location() {
   const [location, setLocation] = useState("");
@@ -56,21 +57,7 @@ function Location() {
 
   return (
     <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
-      <nav className="flex items-start justify-between px-6 py-8 md:px-8">
-        <div>
-          <div className="flex items-center gap-3 text-sm font-bold">
-            <span>SKINSTRIC</span>
-            <span className="font-normal text-gray-400">[ INTRO ]</span>
-          </div>
-
-          <p className="mt-8 text-xs font-bold uppercase">Your Location</p>
-        </div>
-
-        <button className="border border-black bg-black px-3 py-1.5 text-[10px] font-bold uppercase text-white">
-          Enter Code
-        </button>
-      </nav>
-
+      <Navbar subtitle="A.I. Analysis" />
       <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-6">
         <div className="animate-slow-rotate absolute h-[300px] w-[300px] rotate-45 border border-dashed border-gray-300 sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px]"></div>
         <div className="absolute h-[260px] w-[260px] rotate-[75deg] border border-dashed border-gray-300 sm:h-[360px] sm:w-[360px] md:h-[460px] md:w-[460px]"></div>

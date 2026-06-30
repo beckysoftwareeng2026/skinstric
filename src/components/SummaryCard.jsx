@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BottomNavigation from "./BottomNavigation";
 
 function SummaryCard() {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function SummaryCard() {
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-120px)] max-w-6xl flex-col px-6 pb-8">
+    <div className="mx-auto flex min-h-[calc(100vh-120px)] max-w-6xl flex-col px-6 pb-32 pt-8">
       <div className="mb-12">
         <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
           Demographics
@@ -150,25 +151,13 @@ function SummaryCard() {
         </div>
       </div>
 
-      <div className="mt-16 flex items-center justify-between">
-        <button onClick={handleBack} className="flex items-center gap-4">
-          <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
-            <span className="-rotate-45 text-lg">‹</span>
-          </div>
-
-          <span className="text-sm font-bold uppercase">Back</span>
-        </button>
-
-        <button onClick={handleNext} className="flex items-center gap-4">
-          <span className="text-sm font-bold uppercase">
-            {stepIndex === 0 ? "Age" : stepIndex === 1 ? "Gender" : "Finish"}
-          </span>
-
-          <div className="flex h-10 w-10 rotate-45 items-center justify-center border border-black">
-            <span className="-rotate-45 text-lg">›</span>
-          </div>
-        </button>
-      </div>
+      <BottomNavigation
+        onBack={handleBack}
+        onNext={handleNext}
+        nextText={
+          stepIndex === 0 ? "Age" : stepIndex === 1 ? "Gender" : "Finish"
+        }
+      />
     </div>
   );
 }
