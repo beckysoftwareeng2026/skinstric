@@ -63,7 +63,7 @@ function Upload() {
       localStorage.setItem("skinstricImage", base64Image);
       localStorage.setItem("skinstricPhaseTwoResponse", JSON.stringify(data));
 
-      navigate("/demographics");
+      navigate("/select");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Please try again.");
@@ -127,7 +127,7 @@ function Upload() {
         </div>
       </section>
 
-      <BottomNavigation onBack={() => navigate("/result")} showNext={false} />
+      <BottomNavigation onBack={() => navigate("/select")} showNext={false} />
     </PageLayout>
   );
 }

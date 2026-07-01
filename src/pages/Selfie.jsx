@@ -7,13 +7,17 @@ import BottomNavigation from "../components/BottomNavigation";
 function Selfie() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+
   const [stream, setStream] = useState(null);
   const [selfie, setSelfie] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const navigate = useNavigate();
 
   const stopCamera = useCallback(() => {
-    const currentStream = videoRef.current?.srcObject || stream;
+    const currentStream = streamRef.current;
 
     if (currentStream) {
       currentStream.getTracks().forEach((track) => track.stop());
@@ -23,17 +27,20 @@ function Selfie() {
       videoRef.current.srcObject = null;
     }
 
+    streamRef.current = null;
     setStream(null);
-  }, [stream]);
+  }, []);
 
   async function startCamera() {
     try {
       setError("");
+      setSelfie("");
 
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
 
+      streamRef.current = mediaStream;
       setStream(mediaStream);
 
       if (videoRef.current) {
@@ -49,12 +56,26 @@ function Selfie() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
-    if (!video || !canvas) return;
+    if (!video || !canvas || !stream) {
+      setError("Please start the camera first.");
+      return;
+    }
+
+    if (!video.videoWidth || !video.videoHeight) {
+      setError("Camera is still loading. Please try again.");
+      return;
+    }
 
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
     const context = canvas.getContext("2d");
+
+    if (!context) {
+      setError("Unable to capture selfie.");
+      return;
+    }
+
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const imageData = canvas.toDataURL("image/jpeg");
@@ -71,6 +92,9 @@ function Selfie() {
       setError("Please take a selfie first.");
       return;
     }
+
+    setIsSubmitting(true);
+    setError("");
 
     try {
       const response = await fetch(
@@ -91,10 +115,12 @@ function Selfie() {
       localStorage.setItem("skinstricPhaseTwoResponse", JSON.stringify(data));
 
       stopCamera();
-      navigate("/demographics");
+      navigate("/select");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -105,7 +131,7 @@ function Selfie() {
   }, [stopCamera]);
 
   return (
-    <PageLayout className="relative min-h-screen overflow-hidden bg-[#f4f4f2] text-black">
+    <PageLayout className="relative">
       <Navbar subtitle="A.I. Analysis" />
 
       <section className="flex min-h-[70vh] items-center justify-center px-6 pb-28">
@@ -116,14 +142,14 @@ function Selfie() {
             Take a Selfie
           </h1>
 
-          <div className="mx-auto mt-8 h-60 w-60 overflow-hidden rounded-full border border-black bg-white transition duration-500 sm:h-72 sm:w-72">
+          <div className="mx-auto mt-8 flex h-60 w-60 items-center justify-center overflow-hidden rounded-full border border-black bg-white transition duration-500 sm:h-72 sm:w-72">
             {selfie ? (
               <img
                 src={selfie}
                 alt="Selfie preview"
                 className="h-full w-full animate-fade-slide-up object-cover"
               />
-            ) : (
+            ) : stream ? (
               <video
                 ref={videoRef}
                 autoPlay
@@ -131,6 +157,8 @@ function Selfie() {
                 muted
                 className="h-full w-full object-cover"
               />
+            ) : (
+              <span className="text-sm text-gray-500">Selfie preview</span>
             )}
           </div>
 
@@ -152,16 +180,18 @@ function Selfie() {
 
             <button
               onClick={takeSelfie}
-              className="smooth-button w-full border border-black px-6 py-3 text-xs font-bold uppercase hover:bg-black hover:text-white sm:w-auto"
+              disabled={!stream}
+              className="smooth-button w-full border border-black px-6 py-3 text-xs font-bold uppercase hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               Take Selfie
             </button>
 
             <button
               onClick={submitSelfie}
-              className="smooth-button w-full border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white hover:bg-transparent hover:text-black sm:w-auto"
+              disabled={!selfie || isSubmitting}
+              className="smooth-button w-full border border-black bg-black px-6 py-3 text-xs font-bold uppercase text-white hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
-              Submit
+              {isSubmitting ? "Analyzing..." : "Submit"}
             </button>
           </div>
         </div>

@@ -35,7 +35,7 @@ function Proceed() {
       </button>
 
       <button
-        onClick={() => navigate("/result")}
+        onClick={() => navigate("/summary")}
         className="smooth-button absolute bottom-8 right-6 flex items-center gap-4 md:bottom-10 md:right-8"
       >
         <span className="text-sm font-bold uppercase">Proceed</span>

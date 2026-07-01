@@ -11,153 +11,136 @@ function SummaryCard() {
 
   const data = response?.data || {};
 
-  const steps = [
-    { key: "race", label: "Race" },
-    { key: "age", label: "Age" },
-    { key: "gender", label: "Gender" },
-  ];
-
   const sortScores = (scores = {}) => {
     return Object.entries(scores).sort((a, b) => b[1] - a[1]);
   };
 
-  const [stepIndex, setStepIndex] = useState(0);
-  const [animationKey, setAnimationKey] = useState(0);
+  const categories = [
+    { key: "race", label: "Race", displayLabel: "RACE" },
+    { key: "age", label: "Age", displayLabel: "AGE" },
+    { key: "gender", label: "Sex", displayLabel: "SEX" },
+  ];
 
-  const currentStep = steps[stepIndex];
-  const currentOptions = sortScores(data[currentStep.key]);
-  const topPrediction = currentOptions[0]?.[0] || "Unknown";
-  const topScore = currentOptions[0]?.[1] || 0;
+  const [activeCategory, setActiveCategory] = useState("race");
 
   const [selected, setSelected] = useState({
-    race: sortScores(data.race)?.[0]?.[0] || "",
-    age: sortScores(data.age)?.[0]?.[0] || "",
-    gender: sortScores(data.gender)?.[0]?.[0] || "",
+    race: sortScores(data.race)?.[0]?.[0] || "Unknown",
+    age: sortScores(data.age)?.[0]?.[0] || "Unknown",
+    gender: sortScores(data.gender)?.[0]?.[0] || "Unknown",
   });
 
-  function scrollPageToTop() {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }
+  const currentCategory = categories.find(
+    (category) => category.key === activeCategory,
+  );
 
-  function handleNext() {
-    if (stepIndex < steps.length - 1) {
-      setStepIndex(stepIndex + 1);
-      setAnimationKey((prev) => prev + 1);
-      scrollPageToTop();
-      return;
+  const currentOptions = sortScores(data[activeCategory]);
+  const selectedScore =
+    currentOptions.find(([label]) => label === selected[activeCategory])?.[1] ||
+    currentOptions[0]?.[1] ||
+    0;
+
+  const selectedPercent = Math.round(selectedScore * 100);
+
+  function formatValue(value, key) {
+    if (key === "age" && value !== "Unknown") {
+      return `${value} y.o.`;
     }
 
-    localStorage.setItem(
-      "skinstricSelectedAttributes",
-      JSON.stringify(selected),
-    );
-
-    navigate("/select");
-  }
-
-  function handleBack() {
-    if (stepIndex > 0) {
-      setStepIndex(stepIndex - 1);
-      setAnimationKey((prev) => prev + 1);
-      scrollPageToTop();
-      return;
-    }
-
-    navigate("/select");
+    return value;
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-120px)] max-w-6xl flex-col px-6 pb-32 pt-8">
-      <div className="mb-12">
-        <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
+    <div className="px-6 pb-24 pt-4 md:px-8">
+      <section className="animate-fade-slide-up">
+        <h1 className="mt-3 text-[44px] font-[200] uppercase leading-none sm:text-[60px] md:text-[76px]">
           Demographics
-        </p>
-
-        <h1 className="mt-3 text-[44px] font-[200] leading-none md:text-[72px]">
-          Predicted {currentStep.label}
         </h1>
 
-        <p className="mt-6 max-w-xl text-sm uppercase leading-relaxed text-gray-500">
-          Skinstric estimated your demographics based on your selfie. If
-          something doesn't look right, you can change it below.
+        <p className="mt-4 text-sm uppercase">
+          Predicted {currentCategory.displayLabel}
         </p>
-      </div>
+      </section>
 
-      <div
-        key={animationKey}
-        className="flex flex-1 animate-fade-slide-up flex-col items-center justify-center gap-16 lg:flex-row"
-      >
-        <div
-          key={`heading-${animationKey}`}
-          className="animate-fade-slide-up text-center lg:text-left"
-        >
-          <p className="text-sm uppercase tracking-[0.3em] text-gray-400">
-            {currentStep.label}
-          </p>
+      <section className="animate-fade-slide-up mt-12 grid grid-cols-1 gap-5 lg:grid-cols-[190px_1fr_360px]">
+        <div className="space-y-4">
+          {categories.map((category) => {
+            const isActive = activeCategory === category.key;
 
-          <h2 className="mt-3 text-5xl font-[200] md:text-7xl">
-            {selected[currentStep.key] || topPrediction}
-          </h2>
+            return (
+              <button
+                key={category.key}
+                onClick={() => setActiveCategory(category.key)}
+                className={`smooth-button w-full border-t border-black p-4 text-left uppercase ${
+                  isActive ? "bg-black text-white" : "bg-[#eeeeef] text-black"
+                }`}
+              >
+                <p className="text-lg font-bold">
+                  {formatValue(selected[category.key], category.key)}
+                </p>
+                <p className="mt-3 text-lg font-bold">
+                  {category.displayLabel}
+                </p>
+              </button>
+            );
+          })}
         </div>
 
-        <div
-          key={`confidence-${animationKey}`}
-          className="animate-fade-slide-up flex flex-col items-center"
-        >
-          <div className="flex h-48 w-48 items-center justify-center rounded-full border border-black">
-            <div className="flex h-36 w-36 items-center justify-center rounded-full border border-black">
-              <span className="text-4xl font-[200]">
-                {(topScore * 100).toFixed(0)}%
-              </span>
+        <div className="border-t border-black bg-[#f1f1f2] p-6">
+          <h2 className="text-[42px] font-[200] leading-none md:text-[46px]">
+            {formatValue(selected[activeCategory], activeCategory)}
+          </h2>
+
+          <div className="mt-8 flex justify-center">
+            <div
+              className="flex h-60 w-60 items-center justify-center rounded-full md:h-96 md:w-96"
+              style={{
+                background: `conic-gradient(#1a1a1a ${selectedPercent}%, #d9d9d9 ${selectedPercent}% 100%)`,
+              }}
+            >
+              <div className="flex h-[88%] w-[88%] items-center justify-center rounded-full bg-[#f1f1f2]">
+                <span className="text-4xl font-[200]">{selectedPercent}%</span>
+              </div>
             </div>
           </div>
-
-          <p className="mt-6 text-xs font-bold uppercase tracking-widest">
-            A.I. Confidence
-          </p>
         </div>
 
-        <div
-          key={`options-${animationKey}`}
-          className="animate-fade-slide-up w-full max-w-sm"
-        >
-          <div className="space-y-3">
-            {currentOptions.map(([item, score]) => {
-              const isSelected = selected[currentStep.key] === item;
+        <div className="border-t border-black bg-[#f1f1f2]">
+          <div className="flex items-center justify-between p-4 text-lg uppercase">
+            <span>{currentCategory.displayLabel}</span>
+            <span>A.I. Confidence</span>
+          </div>
+
+          <div>
+            {currentOptions.map(([label, score]) => {
+              const isSelected = selected[activeCategory] === label;
 
               return (
                 <button
-                  key={item}
+                  key={label}
                   onClick={() =>
                     setSelected((prev) => ({
                       ...prev,
-                      [currentStep.key]: item,
+                      [activeCategory]: label,
                     }))
                   }
-                  className={`flex w-full items-center justify-between border px-5 py-4 text-left text-sm uppercase transition ${
-                    isSelected
-                      ? "border-black bg-black text-white"
-                      : "border-black/20 hover:border-black"
+                  className={`smooth-button flex w-full items-center justify-between px-4 py-3 text-left text-lg ${
+                    isSelected ? "bg-black text-white" : "hover:bg-white"
                   }`}
                 >
-                  <span>{item}</span>
-                  <span>{(score * 100).toFixed(2)}%</span>
+                  <span className="flex items-center gap-4">
+                    <span className="text-xl">◇</span>
+                    {formatValue(label, activeCategory)}
+                  </span>
+
+                  <span>{Math.round(score * 100)}%</span>
                 </button>
               );
             })}
           </div>
         </div>
-      </div>
+      </section>
 
-      <BottomNavigation
-        onBack={handleBack}
-        onNext={handleNext}
-        nextText={
-          stepIndex === 0 ? "Age" : stepIndex === 1 ? "Gender" : "Finish"
-        }
-      />
+      <BottomNavigation onBack={() => navigate("/result")} showNext={false} />
     </div>
   );
 }
