@@ -140,7 +140,7 @@ function SummaryCard() {
         </div>
       </section>
 
-      <BottomNavigation onBack={() => navigate("/result")} showNext={false} />
+      <BottomNavigation onBack={() => navigate("/select")} showNext={false} />
     </div>
   );
 }

@@ -77,7 +77,7 @@ function Result() {
         </div>
       </section>
 
-      <BottomNavigation onBack={() => navigate("/summary")} showNext={false} />
+      <BottomNavigation onBack={() => navigate("/proceed")} showNext={false} />
     </PageLayout>
   );
 }

@@ -127,7 +127,7 @@ function Upload() {
         </div>
       </section>
 
-      <BottomNavigation onBack={() => navigate("/select")} showNext={false} />
+      <BottomNavigation onBack={() => navigate("/result")} showNext={false} />
     </PageLayout>
   );
 }
