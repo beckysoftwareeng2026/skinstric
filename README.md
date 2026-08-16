@@ -1,16 +1,86 @@
-# React + Vite
+# Skinstric
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive AI-powered skin analysis experience built with React and Vite.
 
-Currently, two official plugins are available:
+Skinstric guides users through an interactive onboarding and selfie-capture flow, sends user data to an external API for analysis, and presents demographic results through a polished, responsive interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+[View Skinstric](https://skinstric-olive.vercel.app)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## About the Project
 
-## Expanding the ESLint configuration
+Skinstric is a frontend application focused on creating a smooth, intuitive user experience around AI-powered demographic analysis.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Users move through a multi-step flow that collects basic information, captures or uploads a selfie, submits the image for analysis, and displays the resulting demographic predictions.
+
+The project challenged me to work with asynchronous API requests, image handling, multi-page application flow, responsive layouts, and reusable React components while closely translating a provided design into a functional application.
+
+## Features
+
+- Multi-step onboarding experience
+- Name and location data collection
+- Selfie capture and image upload
+- External API integration
+- AI-generated demographic analysis
+- Interactive results and summary views
+- Responsive layouts across screen sizes
+- Reusable React components
+- Loading and navigation states
+- Structured multi-page user flow
+
+## Tech Stack
+
+**Frontend**
+
+- React
+- JavaScript
+- Vite
+- CSS
+
+**Development & Deployment**
+
+- Git
+- GitHub
+- Vercel
+- REST APIs
+
+## Application Flow
+
+1. User enters their name and location.
+2. The information is submitted through the initial API request.
+3. The user proceeds to the selfie experience.
+4. A selfie can be captured or an image uploaded.
+5. The image is submitted for demographic analysis.
+6. The application receives the analysis response.
+7. Results are presented through interactive demographic and summary views.
+
+## What I Learned
+
+Building Skinstric strengthened my understanding of:
+
+- Managing state across a multi-step React experience
+- Working with asynchronous API requests and responses
+- Handling image data in the browser
+- Building reusable components
+- Creating responsive interfaces from a provided design
+- Managing navigation across a multi-page user journey
+- Debugging API and application-state behavior
+- Refining an application through multiple development phases
+
+## Project Structure
+
+```text
+src/
+├── components/
+├── pages/
+│   ├── Select.jsx
+│   ├── Selfie.jsx
+│   ├── Summary.jsx
+│   ├── Testing.jsx
+│   └── Upload.jsx
+├── App.jsx
+├── App.css
+├── index.css
+└── main.jsx
+```
